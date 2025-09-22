@@ -3,7 +3,6 @@
 
 Assignment by Aditi Jalaj
 
-
 A Python tool for counting lines of code in source files, supporting multiple programming languages.
 
 ## Features
@@ -127,7 +126,7 @@ class NewLanguageSyntax(LanguageSyntax):
 Run the test suite:
 
 ```bash
-python test_line_counter.py
+python unit_test.py
 ```
 
 The test suite includes:
