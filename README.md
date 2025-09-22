@@ -1,5 +1,9 @@
 # openenvoy-assignment# Lines of Code Counter
 
+
+Assignment by Aditi Jalaj
+
+
 A Python tool for counting lines of code in source files, supporting multiple programming languages.
 
 ## Features
@@ -137,13 +141,3 @@ The test suite includes:
 
 - Python 3.6+
 - No external dependencies (uses only standard library)
-
-## Future Enhancements
-
-The design supports these planned features:
-
-- Multi-file and directory scanning
-- Multi-line comment support
-- Granular line classification (imports, declarations, etc.)
-- Additional language support
-- Configuration file support
