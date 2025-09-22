@@ -9,24 +9,37 @@ A Python tool for counting lines of code in source files, supporting multiple pr
 
 - **Multi-language support**: Java, JavaScript, TypeScript, Python
 - **Accurate counting**: Distinguishes between blank lines, comment lines, and code lines
+- **Granular classification**: Detailed breakdown of code types (imports, classes, methods, etc.)
+- **Multiple files support**: Process single files, multiple files, or entire directories
+- **Directory scanning**: Recursive directory traversal with file filtering
 - **Extensible design**: Easy to add support for new programming languages
 - **Command-line interface**: Simple to use from the terminal
-- **Comprehensive testing**: Full test suite with 24 test cases
+- **Comprehensive testing**: Full test suite with 33 test cases
 
 ## Usage
 
 ### Command Line
 
 ```bash
-python line_counter.py <file_path>
+python line_counter.py <file_path_or_directory> [--granular] [--extensions ext1,ext2]
 ```
+
 
 Examples:
 
 ```bash
+# Single file
 python line_counter.py Main.java
 python line_counter.py script.js
 python line_counter.py module.py
+
+# Single file with granular breakdown
+python line_counter.py Main.java --granular
+
+# Directory scanning
+python line_counter.py /path/to/project --granular
+python line_counter.py /path/to/project --extensions .java,.py
+python line_counter.py /path/to/project --granular --extensions .js,.ts
 ```
 
 ### Programmatic Usage
@@ -34,16 +47,28 @@ python line_counter.py module.py
 ```python
 from line_counter import LineCounter, JavaSyntax, detect_language
 
-# Detect language automatically
+
+# Single file with basic counting
 syntax = detect_language("Main.java")
 counter = LineCounter(syntax)
-
-# Count lines
 counts = counter.count_lines("Main.java")
 print(f"Blank: {counts['blank']}")
 print(f"Comments: {counts['comment']}")
 print(f"Code: {counts['code']}")
 print(f"Total: {counts['total']}")
+
+# Single file with granular counting
+counts = counter.count_lines("Main.java", granular=True)
+print(f"Imports: {counts['import']}")
+print(f"Classes: {counts['class_declaration']}")
+print(f"Methods: {counts['method_declaration']}")
+
+# Multiple files
+file_paths = ["file1.java", "file2.js", "file3.py"]
+counts = counter.count_multiple_files(file_paths, granular=True)
+
+# Directory scanning
+counts = counter.count_directory("/path/to/project", [".java", ".py"], granular=True)
 ```
 
 ## Supported Languages
@@ -55,11 +80,29 @@ print(f"Total: {counts['total']}")
 
 ## Line Classification
 
-The tool classifies each line as one of three types:
+### Basic Classification
+
+The tool classifies each line as one of three basic types:
 
 1. **Blank lines**: Lines containing only whitespace
 2. **Comment lines**: Lines containing only comments (no code)
 3. **Code lines**: Lines containing actual code (may include inline comments)
+
+### Granular Classification (with --granular flag)
+
+When using the `--granular` flag, code lines are further classified into:
+
+- **Import**: Import statements (`import`, `from`, `require`, etc.)
+- **Class Declaration**: Class definitions
+- **Method Declaration**: Method/function definitions
+- **Function Declaration**: Function definitions (JavaScript/Python)
+- **Variable Declaration**: Variable declarations
+- **Function Call**: Function/method calls
+- **Control Flow**: `if`, `for`, `while`, `switch`, etc.
+- **Return Statement**: `return` statements
+- **Assignment**: Assignment operations
+- **Other Code**: Other code that doesn't fit the above categories
+
 
 ## Example Output
 
@@ -140,3 +183,23 @@ The test suite includes:
 
 - Python 3.6+
 - No external dependencies (uses only standard library)
+
+## Advanced Features
+
+### ✅ **Implemented Features:**
+
+- **Multiple files support**: Process multiple files at once
+- **Directory scanning**: Recursive directory traversal with file filtering
+- **Granular classification**: Detailed breakdown of code types
+- **Multi-line comment support**: Basic support for `/* */` and `"""` comments
+- **Language auto-detection**: Automatic language detection by file extension
+- **Error handling**: Graceful handling of file errors and missing files
+
+### 🔮 **Future Enhancements:**
+
+- **Configuration file support**: YAML/JSON configuration files
+- **Additional language support**: C/C++, Go, Rust, etc.
+- **Advanced multi-line comment parsing**: Full multi-line comment block detection
+- **Code complexity metrics**: Cyclomatic complexity, nesting depth
+- **Output formats**: JSON, CSV, XML output options
+- **IDE integration**: VS Code extension, IntelliJ plugin
